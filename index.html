@@ -4,542 +4,266 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>THE CAT ARCHIVE — Be Safe</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#050505;
-  --panel:#101010;
-  --panel2:#151515;
-  --line:#292929;
-  --soft:#bdbdbd;
-  --text:#f4f4f4;
-  --muted:#8f8f8f;
-  --good:#8cffb7;
-  --bad:#ff6d88;
-  --warn:#ffd37b;
-  --ink:#060606;
+  --bg:#080604;--bg2:#0f0c09;--bg3:#161210;
+  --panel:#111008;--line:#28201a;--line2:#3a2e24;
+  --text:#f0e6d8;--muted:#7a6a5a;--soft:#c0a888;
+  --amber:#e8a828;--amber2:#f5c860;--gold:#b87820;--gold2:#d4962a;
+  --cream:#fdf2dc;--teal:#42c8b0;--rose:#d96060;
+  --stripe:rgba(220,160,40,.03);
 }
-html,body{
-  min-height:100%;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Inter,system-ui,sans-serif;
-}
-body{
-  overflow:auto;
-}
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-  background-size:42px 42px;
-  opacity:.22;
-  pointer-events:none;
-  z-index:0;
-}
-body:after{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:radial-gradient(circle at 50% -20%,rgba(140,255,183,.12),transparent 35%),
-             radial-gradient(circle at 90% 120%,rgba(255,109,136,.08),transparent 35%);
-  pointer-events:none;
-  z-index:0;
-}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(-52deg,transparent,transparent 80px,var(--stripe) 80px,var(--stripe) 81px)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 90% 50% at 50% -8%,rgba(220,150,30,.12),transparent),
+    radial-gradient(ellipse 50% 60% at 92% 105%,rgba(185,90,30,.07),transparent),
+    radial-gradient(ellipse 50% 50% at 8% 85%,rgba(66,200,176,.05),transparent)}
 .hidden{display:none!important}
-button,input,textarea{font:inherit}
-button{
-  border:0;
-  cursor:pointer;
-  border-radius:18px;
-  padding:15px 22px;
-  font-weight:900;
-  background:#f3f3f3;
-  color:#050505;
-  transition:.18s ease;
-}
-button:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(255,255,255,.08)}
-button.secondary{background:#181818;color:#fff;border:1px solid #333}
-button.danger{background:linear-gradient(135deg,#ff6d88,#ff9aad);color:#110207}
-button.good{background:linear-gradient(135deg,#8cffb7,#d7ffe5);color:#021209}
-input,textarea{
-  width:100%;
-  border:1px solid #303030;
-  background:#0c0c0c;
-  color:white;
-  outline:none;
-  border-radius:18px;
-  padding:16px;
-}
-textarea{resize:vertical;min-height:145px;line-height:1.65}
-#boot{
-  position:relative;
-  z-index:1;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:32px;
-}
-.bootCard{
-  width:min(980px,100%);
-  border:1px solid #252525;
-  background:linear-gradient(180deg,rgba(18,18,18,.92),rgba(7,7,7,.95));
-  border-radius:36px;
-  padding:42px;
-  box-shadow:0 30px 100px rgba(0,0,0,.65);
-  text-align:center;
-  overflow:hidden;
-  position:relative;
-}
-.bootCard:before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background:linear-gradient(90deg,transparent,rgba(140,255,183,.12),transparent);
-  opacity:.8;
-  pointer-events:none;
-}
-.eyes{
-  display:flex;
-  justify-content:center;
-  gap:min(120px,16vw);
-  margin:10px 0 32px;
-}
-.eye{
-  width:72px;height:72px;border-radius:50%;
-  background:radial-gradient(circle,#e8fff0 0%,#8cffb7 38%,#123820 75%);
-  box-shadow:0 0 34px rgba(140,255,183,.8);
-  animation:blink 7s infinite;
-}
-@keyframes blink{0%,47%,100%{transform:scaleY(1)}48%,50%{transform:scaleY(.06)}}
-.kicker{
-  font-family:"JetBrains Mono",monospace;
-  color:var(--good);
-  letter-spacing:3px;
-  font-size:13px;
-  margin-bottom:12px;
-}
-.title{
-  font-size:clamp(42px,8vw,82px);
-  font-weight:900;
-  letter-spacing:3px;
-  line-height:.95;
-  margin-bottom:18px;
-}
-.subtitle{
-  color:#cfcfcf;
-  line-height:1.8;
-  max-width:760px;
-  margin:0 auto 26px;
-}
-.bootGrid{
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:18px;
-  text-align:left;
-  margin:28px 0;
-}
-.brief,.rules{
-  border:1px solid #292929;
-  background:#0d0d0d;
-  border-radius:26px;
-  padding:22px;
-}
-.brief h3,.rules h3{margin-bottom:12px;font-size:16px}
-.brief p,.rules p,.rules li{color:#bfbfbf;line-height:1.75;font-size:14px}
-.rules ul{padding-left:18px}
-.startBox{
-  max-width:430px;
-  margin:0 auto;
-  display:grid;
-  gap:12px;
-}
-#app{
-  position:relative;
-  z-index:1;
-  min-height:100vh;
-  padding:18px;
-  display:grid;
-  grid-template-columns:340px minmax(0,1fr) 380px;
-  gap:18px;
-}
-.panel{
-  min-height:0;
-  background:rgba(14,14,14,.94);
-  border:1px solid #242424;
-  border-radius:28px;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
-}
-.header{
-  padding:20px;
-  border-bottom:1px solid #222;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-.headerTitle{
-  font-weight:900;
-  letter-spacing:1.2px;
-  font-size:14px;
-}
-.badge{
-  font-family:"JetBrains Mono",monospace;
-  font-size:11px;
-  color:#111;
-  background:#f1f1f1;
-  padding:6px 10px;
-  border-radius:99px;
-  font-weight:900;
-}
-.scroll{
-  overflow:auto;
-  min-height:0;
-  padding:16px;
-  flex:1;
-  max-height:calc(100vh - 98px);
-}
-.scroll::-webkit-scrollbar,.board::-webkit-scrollbar{width:10px;height:10px}
-.scroll::-webkit-scrollbar-thumb,.board::-webkit-scrollbar-thumb{background:#333;border-radius:999px}
-.evidence{
-  background:linear-gradient(180deg,#141414,#101010);
-  border:1px solid #2b2b2b;
-  border-radius:22px;
-  padding:17px;
-  margin-bottom:14px;
-  cursor:grab;
-  transition:.16s ease;
-  user-select:none;
-}
-.evidence:hover{transform:translateY(-2px);border-color:#777}
-.evidence:active{cursor:grabbing}
-.evtype{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  color:#858585;
-  font-family:"JetBrains Mono",monospace;
-  font-size:11px;
-  font-weight:800;
-  margin-bottom:11px;
-}
-.evtitle{font-weight:900;margin-bottom:9px}
-.evtext{font-size:13px;color:#c8c8c8;line-height:1.65}
-.board{
-  overflow:auto;
-  min-height:0;
-  padding:16px;
-  flex:1;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  max-height:calc(100vh - 98px);
-}
-.drop{
-  min-height:280px;
-  background:#0b0b0b;
-  border:2px dashed #333;
-  border-radius:24px;
-  padding:16px;
-  transition:.16s;
-}
-.drop.over{border-color:var(--good);background:#0f1511}
-.drop h3{
-  font-size:13px;
-  letter-spacing:1px;
-  margin-bottom:10px;
-  color:#f1f1f1;
-}
-.drop small{
-  display:block;
-  color:#8d8d8d;
-  line-height:1.5;
-  margin-bottom:12px;
-}
-.drop .evidence{
-  margin-bottom:10px;
-  padding:13px;
-  border-radius:18px;
-}
-.rightContent{
-  padding:16px;
-  overflow:auto;
-  min-height:0;
-  flex:1;
-  max-height:calc(100vh - 98px);
-}
-.statusCard{
-  border:1px solid #2a2a2a;
-  background:#0d0d0d;
-  border-radius:24px;
-  padding:18px;
-  margin-bottom:14px;
-}
-.statusCard h3{font-size:15px;margin-bottom:10px}
-.statusCard p{color:#c9c9c9;font-size:13px;line-height:1.7}
-.timelineOrder{
-  display:grid;
-  gap:10px;
-  margin-top:10px;
-}
-.orderRow{
-  display:grid;
-  grid-template-columns:34px 1fr;
-  gap:9px;
-  align-items:center;
-}
-.orderRow input{
-  padding:12px;
-  border-radius:14px;
-  font-family:"JetBrains Mono",monospace;
-}
-.actions{
-  display:grid;
-  gap:10px;
-  margin-top:12px;
-}
-.toast{
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  z-index:9999;
-  border:1px solid #343434;
-  background:#111;
-  color:#fff;
-  border-radius:18px;
-  padding:15px 18px;
-  max-width:360px;
-  box-shadow:0 18px 70px rgba(0,0,0,.55);
-}
-#final{
-  position:relative;
-  z-index:1;
-  min-height:100vh;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:30px;
-}
-.finalCard{
-  width:min(980px,100%);
-  text-align:center;
-  background:linear-gradient(180deg,#121212,#080808);
-  border:1px solid #292929;
-  border-radius:36px;
-  padding:38px;
-}
-.score{
-  font-size:clamp(64px,12vw,120px);
-  font-weight:900;
-  margin-bottom:10px;
-}
-.score.ok{color:var(--good)}
-.score.no{color:var(--bad)}
-.finalCard h1{font-size:clamp(32px,7vw,66px);margin-bottom:16px}
-.finalCard p{color:#d0d0d0;line-height:1.85;max-width:760px;margin:0 auto 22px}
-.certWrap{
-  display:none;
-  margin:24px auto 0;
-  max-width:900px;
-}
-#certificate{
-  width:900px;
-  height:560px;
-  background:
-    radial-gradient(circle at 20% 20%,rgba(140,255,183,.18),transparent 25%),
-    radial-gradient(circle at 80% 80%,rgba(255,109,136,.12),transparent 28%),
-    linear-gradient(135deg,#101010,#050505);
-  border:2px solid #f1f1f1;
-  border-radius:28px;
-  position:relative;
-  color:#f8f8f8;
-  padding:42px;
-  text-align:left;
-  overflow:hidden;
-  font-family:Inter,sans-serif;
-}
-#certificate:before{
-  content:"";
-  position:absolute;
-  inset:22px;
-  border:1px solid rgba(255,255,255,.35);
-  border-radius:18px;
-  pointer-events:none;
-}
-#certificate .certTop{
-  font-family:"JetBrains Mono",monospace;
-  letter-spacing:3px;
-  color:#8cffb7;
-  font-size:13px;
-  margin-bottom:28px;
-}
-#certificate .certTitle{
-  font-size:46px;
-  font-weight:900;
-  margin-bottom:20px;
-}
-#certificate .certName{
-  font-size:34px;
-  font-weight:900;
-  margin:16px 0;
-  color:#fff;
-}
-#certificate .certText{
-  max-width:720px;
-  color:#d5d5d5;
-  line-height:1.7;
-  font-size:16px;
-}
-#certificate .certFoot{
-  position:absolute;
-  left:42px;
-  right:42px;
-  bottom:34px;
-  display:flex;
-  justify-content:space-between;
-  gap:24px;
-  color:#d8d8d8;
-  font-size:13px;
-  align-items:flex-end;
-}
-.sign{
-  font-family:cursive;
-  font-size:28px;
-  color:#fff;
-}
-.mobileHint{
-  display:none;
-  color:#bfbfbf;
-  line-height:1.6;
-  padding:12px 16px 0;
-  font-size:13px;
-}
-
-.helpLine{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-.soundBtn{
-  position:fixed;
-  top:16px;
-  right:16px;
-  z-index:10000;
-  width:auto;
-  padding:12px 16px;
-  border:1px solid #3a3a3a;
-  background:#111;
-  color:#fff;
-}
-.helpModal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.78);
-  backdrop-filter:blur(10px);
-  z-index:10001;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
+button,input,textarea{font-family:'DM Sans',sans-serif}
+button{border:0;cursor:pointer;border-radius:12px;padding:13px 22px;font-weight:700;font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;transition:.18s ease;
+  background:linear-gradient(140deg,var(--amber2) 0%,var(--amber) 55%,var(--gold2) 100%);
+  color:#120c02;position:relative;overflow:hidden}
+button::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18),transparent);pointer-events:none}
+button:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(232,168,40,.25)}
+button:active{transform:translateY(0)}
+button.secondary{background:rgba(255,255,255,.04);color:var(--soft);border:1px solid var(--line2)}
+button.secondary::before{display:none}
+button.secondary:hover{background:rgba(255,255,255,.07);box-shadow:none;border-color:var(--muted)}
+button.good{background:linear-gradient(135deg,var(--teal),#30a890);color:#021a14}
+input,textarea{width:100%;border:1px solid var(--line2);background:rgba(255,255,255,.03);
+  color:var(--text);outline:none;border-radius:12px;padding:14px 16px;transition:.18s;font-size:14px}
+input:focus,textarea:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(232,168,40,.12)}
+textarea{resize:vertical;min-height:140px;line-height:1.75}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+#boot{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.bootCard{width:min(1020px,100%);border:1px solid var(--line2);
+  background:linear-gradient(160deg,rgba(22,18,12,.98),rgba(8,6,4,.99));
+  border-radius:36px;padding:56px 52px;
+  box-shadow:0 48px 120px rgba(0,0,0,.8),inset 0 1px 0 rgba(232,168,40,.15);
+  text-align:center;overflow:hidden;position:relative}
+.bootCard::before{content:"";position:absolute;top:14px;left:14px;right:14px;bottom:14px;
+  border:1px solid rgba(232,168,40,.08);border-radius:24px;pointer-events:none}
+.bootCard::after{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(232,168,40,.35),transparent)}
+.catHero{display:flex;justify-content:center;margin:0 0 36px;animation:catFloat 5s ease-in-out infinite}
+@keyframes catFloat{0%,100%{transform:translateY(0) rotate(0deg)}40%{transform:translateY(-10px) rotate(-1deg)}60%{transform:translateY(-7px) rotate(1deg)}}
+.kicker{font-family:'DM Mono',monospace;color:var(--amber);letter-spacing:.3em;font-size:10.5px;margin-bottom:18px;opacity:.9}
+.title{font-family:'Playfair Display',serif;font-size:clamp(54px,9vw,100px);font-weight:900;
+  letter-spacing:-.03em;line-height:.88;margin-bottom:14px;
+  background:linear-gradient(145deg,var(--cream) 0%,var(--amber2) 45%,var(--amber) 70%,var(--gold2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{color:var(--soft);line-height:1.9;max-width:680px;margin:0 auto 36px;font-size:14.5px;font-weight:300}
+.ruledivider{display:flex;align-items:center;gap:16px;max-width:500px;margin:0 auto 30px}
+.ruledivider::before,.ruledivider::after{content:"";flex:1;height:1px}
+.ruledivider::before{background:linear-gradient(90deg,transparent,var(--line2))}
+.ruledivider::after{background:linear-gradient(90deg,var(--line2),transparent)}
+.ruledivider span{font-size:18px;opacity:.6}
+.bootGrid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;text-align:left;margin:0 0 28px}
+.brief,.rules{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:20px;padding:22px 24px;position:relative}
+.brief::after,.rules::after{content:"";position:absolute;inset:0;border-radius:20px;
+  background:linear-gradient(140deg,rgba(232,168,40,.04),transparent 60%);pointer-events:none}
+.brief h3,.rules h3{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.25em;
+  text-transform:uppercase;color:var(--amber);margin-bottom:12px;font-weight:500}
+.brief p,.rules p,.rules li{color:var(--soft);line-height:1.85;font-size:13.5px}
+.rules ul{padding-left:16px}
+.rules li{margin-bottom:6px}
+.startBox{max-width:440px;margin:0 auto;display:grid;gap:12px}
+.helpLine{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.soundBtn{position:fixed;top:16px;right:16px;z-index:10000;padding:10px 16px;border-radius:10px;
+  border:1px solid var(--line2);background:rgba(8,6,4,.88);backdrop-filter:blur(12px);
+  color:var(--soft);font-size:11px;letter-spacing:.1em}
+.soundBtn::before{display:none}
+.soundBtn:hover{background:rgba(22,18,12,.95);box-shadow:none}
+#app{position:relative;z-index:1;min-height:100vh;padding:16px;display:grid;
+  grid-template-columns:330px minmax(0,1fr) 370px;gap:14px}
+.panel{min-height:0;background:rgba(14,11,8,.95);border:1px solid var(--line2);
+  border-radius:24px;overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 24px 60px rgba(0,0,0,.4);position:relative}
+.panel::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(232,168,40,.2),transparent);pointer-events:none}
+.header{padding:18px 20px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:12px}
+.headerTitle{font-family:'DM Mono',monospace;font-weight:500;letter-spacing:.12em;font-size:11px;color:var(--soft);text-transform:uppercase}
+.badge{font-family:'DM Mono',monospace;font-size:10px;color:var(--amber);
+  background:rgba(232,168,40,.1);border:1px solid rgba(232,168,40,.2);
+  padding:5px 10px;border-radius:20px;font-weight:500}
+.scroll{overflow:auto;min-height:0;padding:14px;flex:1;max-height:calc(100vh - 90px)}
+.scroll::-webkit-scrollbar,.board::-webkit-scrollbar{width:6px}
+.scroll::-webkit-scrollbar-thumb,.board::-webkit-scrollbar-thumb{background:var(--line2);border-radius:999px}
+.evidence{background:linear-gradient(160deg,rgba(26,20,14,.9),rgba(14,10,7,.95));
+  border:1px solid var(--line2);border-radius:16px;padding:15px 16px;margin-bottom:12px;
+  cursor:grab;transition:.18s ease;user-select:none;position:relative;overflow:hidden}
+.evidence::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(232,168,40,.025),transparent 50%);pointer-events:none}
+.evidence:hover{transform:translateY(-2px);border-color:var(--amber);box-shadow:0 8px 24px rgba(232,168,40,.1)}
+.evidence:active{cursor:grabbing;transform:translateY(0)}
+.evtype{display:flex;justify-content:space-between;gap:8px;color:var(--muted);
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:.1em}
+.evtype span:last-child{color:var(--amber);opacity:.8}
+.evtitle{font-weight:700;margin-bottom:8px;font-size:13.5px;color:var(--cream)}
+.evtext{font-size:12.5px;color:var(--soft);line-height:1.7}
+.board{overflow:auto;min-height:0;padding:14px;flex:1;display:grid;
+  grid-template-columns:1fr 1fr;gap:12px;max-height:calc(100vh - 90px)}
+.board::-webkit-scrollbar{width:6px}
+.drop{min-height:260px;background:rgba(8,6,4,.6);border:1.5px dashed var(--line2);
+  border-radius:18px;padding:14px;transition:.2s;position:relative}
+.drop::before{content:"";position:absolute;inset:0;border-radius:18px;
+  background:linear-gradient(160deg,rgba(232,168,40,.02),transparent);pointer-events:none}
+.drop.over{border-color:var(--amber);background:rgba(232,168,40,.05);box-shadow:inset 0 0 20px rgba(232,168,40,.05)}
+.drop h3{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;
+  margin-bottom:8px;color:var(--soft);text-transform:uppercase}
+.drop small{display:block;color:var(--muted);line-height:1.6;margin-bottom:10px;font-size:12px}
+.drop .evidence{margin-bottom:9px;padding:12px 13px;border-radius:13px}
+.drop[data-zone="real"] h3{color:#a0d888}
+.drop[data-zone="real"].over{border-color:#a0d888;background:rgba(160,216,136,.04)}
+.drop[data-zone="fake"] h3{color:var(--rose)}
+.drop[data-zone="fake"].over{border-color:var(--rose);background:rgba(217,96,96,.04)}
+.drop[data-zone="cat"] h3{color:var(--amber)}
+.drop[data-zone="timeline"] h3{color:var(--teal)}
+.drop[data-zone="timeline"].over{border-color:var(--teal);background:rgba(66,200,176,.04)}
+.rightContent{padding:14px;overflow:auto;min-height:0;flex:1;max-height:calc(100vh - 90px);display:flex;flex-direction:column;gap:12px}
+.statusCard{border:1px solid var(--line);background:rgba(255,255,255,.02);border-radius:16px;padding:16px 18px}
+.statusCard h3{font-size:10px;font-family:'DM Mono',monospace;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--amber);margin-bottom:8px;font-weight:500}
+.statusCard p{color:var(--soft);font-size:13px;line-height:1.75}
+.timelineOrder{display:grid;gap:8px;margin-top:10px}
+.orderRow{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:center}
+.orderRow>span{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-align:center}
+.orderRow input{padding:10px 12px;border-radius:10px;font-family:'DM Mono',monospace;font-size:13px}
+.actions{display:grid;gap:9px;margin-top:auto;padding-top:4px}
+.toast{position:fixed;right:18px;bottom:18px;z-index:9999;border:1px solid var(--line2);
+  background:rgba(14,11,8,.97);backdrop-filter:blur(16px);color:var(--text);
+  border-radius:14px;padding:14px 18px;max-width:360px;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);font-size:13.5px;line-height:1.6;
+  border-top:2px solid var(--amber);animation:toastIn .25s ease}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.mobileHint{display:none;color:var(--muted);line-height:1.6;padding:10px 14px 0;font-size:12.5px}
+#final{position:relative;z-index:1;min-height:100vh;display:none;
+  align-items:center;justify-content:center;padding:30px 20px}
+.finalCard{width:min(980px,100%);text-align:center;
+  background:linear-gradient(160deg,rgba(22,18,12,.98),rgba(8,6,4,.99));
+  border:1px solid var(--line2);border-radius:36px;padding:44px;
+  box-shadow:0 48px 120px rgba(0,0,0,.8),inset 0 1px 0 rgba(232,168,40,.12);position:relative;overflow:hidden}
+.finalCard::after{content:"";position:absolute;top:0;left:20%;right:20%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(232,168,40,.35),transparent)}
+.score{font-family:'Playfair Display',serif;font-size:clamp(72px,13vw,130px);font-weight:900;margin-bottom:8px;line-height:1}
+.score.ok{background:linear-gradient(135deg,var(--teal),#70e0c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.score.no{background:linear-gradient(135deg,var(--rose),#f09090);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.finalCard h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,52px);margin-bottom:16px;color:var(--cream)}
+.finalCard>p{color:var(--soft);line-height:1.9;max-width:700px;margin:0 auto 24px;font-size:14.5px}
+.finalCard .actions{max-width:420px;margin:0 auto;gap:10px;display:grid}
+.certWrap{display:none;margin:32px auto 0;max-width:960px;overflow:auto}
+#certificate{border-radius:24px;display:block}
+.helpModal{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(14px);
+  z-index:10001;display:none;align-items:center;justify-content:center;padding:20px}
 .helpModal.open{display:flex}
-.helpBox{
-  width:min(860px,100%);
-  max-height:88vh;
-  overflow:auto;
-  background:linear-gradient(180deg,#151515,#080808);
-  border:1px solid #303030;
-  border-radius:30px;
-  padding:28px;
-  box-shadow:0 30px 120px rgba(0,0,0,.7);
-}
-.helpBox h2{font-size:32px;margin-bottom:12px}
-.helpBox p,.helpBox li{color:#cecece;line-height:1.75;font-size:15px}
-.helpBox ol{padding-left:22px;margin:16px 0}
+.helpBox{width:min(860px,100%);max-height:88vh;overflow:auto;
+  background:linear-gradient(160deg,rgba(22,18,12,.99),rgba(8,6,4,.99));
+  border:1px solid var(--line2);border-radius:28px;padding:32px;
+  box-shadow:0 40px 120px rgba(0,0,0,.75);position:relative}
+.helpBox::before{content:"";position:absolute;top:0;left:20%;right:20%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(232,168,40,.3),transparent)}
+.helpBox h2{font-family:'Playfair Display',serif;font-size:32px;margin-bottom:14px;color:var(--cream)}
+.helpBox p,.helpBox li{color:var(--soft);line-height:1.85;font-size:14px}
+.helpBox ol{padding-left:20px;margin:14px 0}
+.helpBox li{margin-bottom:8px}
 .helpBox .miniGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
-.helpChip{border:1px solid #2f2f2f;background:#0d0d0d;border-radius:18px;padding:14px;color:#d6d6d6;line-height:1.55;font-size:14px}
+.helpChip{border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:16px;padding:14px 16px;color:var(--soft);line-height:1.65;font-size:13.5px}
+.helpChip b{color:var(--cream);display:block;margin-bottom:4px;font-size:12px;letter-spacing:.08em;font-family:'DM Mono',monospace;text-transform:uppercase}
 .helpActions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+@media(max-width:1200px){
+  #app{display:flex;flex-direction:column;height:auto;min-height:100vh;overflow:visible}
+  .panel{min-height:auto}
+  .scroll,.board,.rightContent{max-height:none;overflow:visible}
+  .board{grid-template-columns:1fr}
+  .drop{min-height:200px}
+  .mobileHint{display:block}
+  .rightContent{flex:none}
+  .actions{margin-top:10px}
+}
 @media(max-width:760px){
-  .soundBtn{position:sticky;top:8px;margin:8px;width:calc(100% - 16px)}
+  #boot{padding:14px}.bootCard{padding:26px 20px;border-radius:24px}
+  .bootGrid{grid-template-columns:1fr}
+  #app{padding:10px;gap:10px}.panel{border-radius:18px}
+  .board,.scroll,.rightContent{padding:10px}
+  button{width:100%}
+  .finalCard{padding:26px 20px;border-radius:24px}
+  .certWrap{overflow:auto}
+  #certificate{transform:scale(.58);transform-origin:top left;margin-bottom:-252px}
   .helpBox .miniGrid{grid-template-columns:1fr}
   .helpActions{display:grid}
-}
-
-@media(max-width:1200px){
-  #app{
-    display:flex;
-    flex-direction:column;
-    height:auto;
-    min-height:100vh;
-    overflow:visible;
-  }
-  .panel{min-height:auto}
-  .scroll,.board,.rightContent{
-    max-height:none;
-    overflow:visible;
-  }
-  .board{grid-template-columns:1fr}
-  .drop{min-height:220px}
-  .mobileHint{display:block}
-}
-@media(max-width:760px){
-  #boot{padding:14px}
-  .bootCard{padding:24px;border-radius:26px}
-  .bootGrid{grid-template-columns:1fr}
-  .eyes{gap:70px}
-  .eye{width:56px;height:56px}
-  #app{padding:10px;gap:10px}
-  .panel{border-radius:20px}
-  .header{padding:16px}
-  .board,.scroll,.rightContent{padding:12px}
-  .drop{padding:12px;border-radius:18px}
-  button{width:100%}
-  .finalCard{padding:24px;border-radius:26px}
-  .certWrap{overflow:auto}
-  #certificate{transform:scale(.72);transform-origin:top left}
+  .soundBtn{position:sticky;top:8px;margin:8px;width:calc(100% - 16px)}
 }
 </style>
 </head>
-
 <body>
-<button class="soundBtn" id="muteBtn" onclick="toggleMute()">ÁUDIO: ON</button>
+<button class="soundBtn" id="muteBtn" onclick="toggleMute()">&#128266; AUDIO: ON</button>
+
 <section id="boot">
   <div class="bootCard">
-    <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+    <div class="catHero">
+      <svg width="148" height="148" viewBox="0 0 148 148" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="bG" cx="50%" cy="45%" r="55%"><stop offset="0%" stop-color="#3a2e20"/><stop offset="100%" stop-color="#1a1410"/></radialGradient>
+          <radialGradient id="hG" cx="45%" cy="38%" r="58%"><stop offset="0%" stop-color="#4e3c26"/><stop offset="100%" stop-color="#281e12"/></radialGradient>
+          <radialGradient id="eG" cx="35%" cy="35%" r="55%"><stop offset="0%" stop-color="#f8dc6a"/><stop offset="55%" stop-color="#e8a828"/><stop offset="100%" stop-color="#7a4810"/></radialGradient>
+          <radialGradient id="nG" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#e87a8a"/><stop offset="100%" stop-color="#b04858"/></radialGradient>
+          <filter id="eGlow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <ellipse cx="74" cy="134" rx="36" ry="10" fill="rgba(232,168,40,.12)"/>
+        <ellipse cx="74" cy="108" rx="40" ry="34" fill="url(#bG)"/>
+        <ellipse cx="74" cy="72" rx="44" ry="40" fill="url(#hG)"/>
+        <polygon points="36,52 25,18 56,44" fill="#1c1610"/>
+        <polygon points="40,50 32,22 54,44" fill="rgba(160,70,60,.55)"/>
+        <polygon points="112,52 123,18 92,44" fill="#1c1610"/>
+        <polygon points="108,50 116,22 94,44" fill="rgba(160,70,60,.55)"/>
+        <path d="M56,64 Q65,58 74,64" stroke="rgba(16,10,4,.35)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M92,64 Q83,58 74,64" stroke="rgba(16,10,4,.35)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="57" cy="74" rx="12" ry="12" fill="url(#eG)" filter="url(#eGlow)"/>
+        <ellipse cx="91" cy="74" rx="12" ry="12" fill="url(#eG)" filter="url(#eGlow)"/>
+        <ellipse cx="57" cy="74" rx="5" ry="9" fill="#080604"/>
+        <ellipse cx="91" cy="74" rx="5" ry="9" fill="#080604"/>
+        <circle cx="59.5" cy="70" r="3" fill="rgba(255,255,255,.75)"/>
+        <circle cx="93.5" cy="70" r="3" fill="rgba(255,255,255,.75)"/>
+        <circle cx="55" cy="77" r="1.5" fill="rgba(255,255,255,.3)"/>
+        <circle cx="89" cy="77" r="1.5" fill="rgba(255,255,255,.3)"/>
+        <polygon points="74,85 68.5,92 79.5,92" fill="url(#nG)"/>
+        <path d="M68.5,92 Q74,98 79.5,92" stroke="#a04050" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <line x1="22" y1="80" x2="57" y2="86" stroke="rgba(210,175,100,.38)" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="20" y1="88" x2="56" y2="90" stroke="rgba(210,175,100,.38)" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="24" y1="96" x2="57" y2="94" stroke="rgba(210,175,100,.38)" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="126" y1="80" x2="91" y2="86" stroke="rgba(210,175,100,.38)" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="128" y1="88" x2="92" y2="90" stroke="rgba(210,175,100,.38)" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="124" y1="96" x2="91" y2="94" stroke="rgba(210,175,100,.38)" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M40,103 Q74,120 108,103" stroke="#e8a828" stroke-width="5.5" fill="none" stroke-linecap="round" opacity=".85"/>
+        <circle cx="74" cy="117" r="6" fill="#b87820" stroke="#f0d060" stroke-width="1.5"/>
+        <circle cx="72.5" cy="115" r="2" fill="rgba(255,240,160,.6)"/>
+      </svg>
+    </div>
     <div class="kicker">BE SAFE // FORENSIC PUZZLE</div>
     <div class="title">THE CAT ARCHIVE</div>
-    <p class="subtitle">
-      Nem todo miado é incidente... nem todo silêncio é normal.
-      Você recebeu 12 evidências corrompidas de um comprometimento interno.
-      Separe ruído felino, evidência falsa e evidência real. Depois monte a hipótese final.
-    </p>
-
+    <div class="ruledivider"><span>&#128062;</span></div>
+    <p class="subtitle">Nem todo miado e incidente... nem todo silencio e normal. Voce recebeu 12 evidencias corrompidas de um comprometimento interno. Separe ruido felino, evidencia falsa e evidencia real. Depois monte a hipotese final.</p>
     <div class="bootGrid">
       <div class="brief">
-        <h3>Dinâmica</h3>
-        <p>Arraste cada arquivo para uma das áreas do mural: evidência real, evidência falsa, causado pelo gato ou linha do tempo crítica. Algumas evidências podem entrar na linha do tempo e também serem reais... a maldade está justamente aí.</p>
+        <h3>Dinamica</h3>
+        <p>Arraste cada arquivo para uma das areas do mural: evidencia real, evidencia falsa, causado pelo gato ou linha do tempo critica. Algumas evidencias podem entrar na linha do tempo e tambem serem reais... a maldade esta justamente ai.</p>
       </div>
       <div class="rules">
         <h3>Regras</h3>
         <ul>
           <li>70% libera certificado em PNG.</li>
-          <li>Você precisa classificar todos os 12 arquivos no mural.</li>
-          <li>O relatório precisa citar os elementos centrais do ataque.</li>
+          <li>Voce precisa classificar todos os 12 arquivos no mural.</li>
+          <li>O relatorio precisa citar os elementos centrais do ataque.</li>
         </ul>
       </div>
     </div>
-
     <div class="startBox">
       <input id="playerName" placeholder="Nome do investigador..." />
       <div class="helpLine">
@@ -553,54 +277,50 @@ textarea{resize:vertical;min-height:145px;line-height:1.65}
 <main id="app" class="hidden">
   <section class="panel">
     <div class="header">
-      <div class="headerTitle">ARQUIVOS RECUPERADOS</div>
+      <div class="headerTitle">Arquivos Recuperados</div>
       <div class="badge" id="leftCount">12</div>
     </div>
-    <div class="mobileHint">No celular, arraste os cards normalmente. Se o navegador dificultar o drag, toque no card para enviá-lo ciclicamente entre as áreas.</div>
+    <p class="mobileHint">No celular, toque no card para envia-lo ciclicamente entre as areas.</p>
     <div class="scroll" id="evidencePool"></div>
   </section>
-
   <section class="panel">
     <div class="header">
-      <div class="headerTitle">MURAL INVESTIGATIVO</div>
+      <div class="headerTitle">Mural Investigativo</div>
       <div class="badge">ARCHIVE BOARD</div>
     </div>
     <div class="board">
       <div class="drop" data-zone="real" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="dropCard(event)">
-        <h3>EVIDÊNCIA REAL</h3>
-        <small>Artefatos que sustentam comprometimento, abuso de acesso, execução ou movimentação.</small>
+        <h3>EVIDENCIA REAL</h3>
+        <small>Artefatos que sustentam comprometimento, abuso de acesso, execucao ou movimentacao.</small>
       </div>
       <div class="drop" data-zone="fake" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="dropCard(event)">
-        <h3>EVIDÊNCIA FALSA / PLANTADA</h3>
-        <small>Itens que confundem a análise ou não fecham tecnicamente com o incidente.</small>
+        <h3>EVIDENCIA FALSA / PLANTADA</h3>
+        <small>Itens que confundem a analise ou nao fecham tecnicamente com o incidente.</small>
       </div>
       <div class="drop" data-zone="cat" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="dropCard(event)">
         <h3>CAUSADO PELO GATO</h3>
-        <small>Caos físico, coincidência operacional ou evento real sem origem maliciosa.</small>
+        <small>Caos fisico, coincidencia operacional ou evento real sem origem maliciosa.</small>
       </div>
       <div class="drop" data-zone="timeline" ondragover="allowDrop(event)" ondragleave="leaveDrop(event)" ondrop="dropCard(event)">
-        <h3>LINHA DO TEMPO CRÍTICA</h3>
-        <small>Coloque aqui somente os eventos que compõem a cadeia principal do ataque.</small>
+        <h3>LINHA DO TEMPO CRITICA</h3>
+        <small>Coloque aqui somente os eventos que compoem a cadeia principal do ataque.</small>
       </div>
     </div>
   </section>
-
   <aside class="panel">
     <div class="header">
-      <div class="headerTitle">RELATÓRIO FINAL</div>
+      <div class="headerTitle">Relatorio Final</div>
       <div class="badge">70%</div>
     </div>
     <div class="rightContent">
       <div class="statusCard">
-        <h3>Hipótese investigativa</h3>
-        <p>Explique o vetor inicial, a persistência, a conta envolvida e o sinal de comunicação externa. Sem isso, o gato ganha e o atacante também.</p>
+        <h3>Hipotese investigativa</h3>
+        <p>Explique o vetor inicial, a persistencia, a conta envolvida e o sinal de comunicacao externa.</p>
       </div>
-
-      <textarea id="reportText" placeholder="Ex.: macro em documento, execução PowerShell, criação da conta..., beacon DNS..."></textarea>
-
+      <textarea id="reportText" placeholder="Ex.: macro em documento, execucao PowerShell, criacao da conta..., beacon DNS..."></textarea>
       <div class="statusCard">
-        <h3>Ordem dos eventos críticos</h3>
-        <p>Opcional, mas soma pontos. Use IDs dos cards na ordem mais provável. Exemplo: E03, E10, E02...</p>
+        <h3>Ordem dos eventos criticos</h3>
+        <p>Opcional, mas soma pontos. Use IDs dos cards na ordem mais provavel.</p>
         <div class="timelineOrder">
           <div class="orderRow"><span>1</span><input id="o1" placeholder="E__"></div>
           <div class="orderRow"><span>2</span><input id="o2" placeholder="E__"></div>
@@ -608,35 +328,33 @@ textarea{resize:vertical;min-height:145px;line-height:1.65}
           <div class="orderRow"><span>4</span><input id="o4" placeholder="E__"></div>
         </div>
       </div>
-
       <div class="actions">
         <button class="secondary" onclick="openHelp()">AJUDA DO DESAFIO</button>
-        <button class="good" onclick="finish()">FINALIZAR INVESTIGAÇÃO</button>
+        <button class="good" onclick="finish()">FINALIZAR INVESTIGACAO</button>
         <button class="secondary" onclick="resetBoard()">LIMPAR MURAL</button>
       </div>
     </div>
   </aside>
 </main>
 
-
 <div class="helpModal" id="helpModal" onclick="closeHelp(event)">
   <div class="helpBox" onclick="event.stopPropagation()">
     <h2>Como funciona o desafio</h2>
-    <p>Você está analisando um arquivo de incidente com 12 evidências. O objetivo não é responder pergunta de prova: é montar um mural investigativo coerente.</p>
+    <p>Voce esta analisando um arquivo de incidente com 12 evidencias. O objetivo nao e responder pergunta de prova: e montar um mural investigativo coerente.</p>
     <ol>
-      <li><b>Leia cada evidência</b> e observe horário, origem, contexto e se ela sustenta uma cadeia de ataque.</li>
-      <li><b>Arraste os cards</b> para uma das áreas: evidência real, falsa/plantada, causada pelo gato ou linha do tempo crítica.</li>
-      <li><b>Linha do tempo crítica</b> deve receber apenas os eventos centrais do ataque. Nem tudo que é real é necessariamente parte da cadeia principal.</li>
-      <li><b>Escreva o relatório final</b> citando vetor inicial, persistência, conta abusada e comunicação externa.</li>
-      <li><b>Finalize somente quando terminar</b>. Se faltar card ou relatório, o desafio avisa e não reinicia a página.</li>
+      <li><b>Leia cada evidencia</b> e observe horario, origem, contexto e se ela sustenta uma cadeia de ataque.</li>
+      <li><b>Arraste os cards</b> para uma das areas: evidencia real, falsa/plantada, causada pelo gato ou linha do tempo critica.</li>
+      <li><b>Linha do tempo critica</b> deve receber apenas os eventos centrais do ataque.</li>
+      <li><b>Escreva o relatorio final</b> citando vetor inicial, persistencia, conta abusada e comunicacao externa.</li>
+      <li><b>Finalize somente quando terminar</b>. Se faltar card ou relatorio, o desafio avisa.</li>
     </ol>
     <div class="miniGrid">
-      <div class="helpChip"><b>Evidência real</b><br>Artefato técnico que sustenta comprometimento, abuso ou exfiltração.</div>
-      <div class="helpChip"><b>Evidência falsa</b><br>Item sem relação temporal ou técnica com o incidente. Bonito para confundir... inútil para concluir.</div>
-      <div class="helpChip"><b>Causado pelo gato</b><br>Evento físico ou ruído operacional sem cadeia lógica de ataque.</div>
-      <div class="helpChip"><b>Linha do tempo</b><br>Somente a sequência principal do ataque. Aqui é onde o chute morre e a correlação nasce.</div>
+      <div class="helpChip"><b>Evidencia real</b>Artefato tecnico que sustenta comprometimento, abuso ou exfiltracao.</div>
+      <div class="helpChip"><b>Evidencia falsa</b>Item sem relacao temporal ou tecnica com o incidente.</div>
+      <div class="helpChip"><b>Causado pelo gato</b>Evento fisico ou ruido operacional sem cadeia logica.</div>
+      <div class="helpChip"><b>Linha do tempo</b>Somente a sequencia principal do ataque.</div>
     </div>
-    <p>Meta: atingir pelo menos 70% para liberar o certificado em PNG.</p>
+    <p>Meta: atingir pelo menos 70% para liberar o certificado premium em PNG.</p>
     <div class="helpActions">
       <button class="secondary" onclick="playMeow()">TESTAR MIADO</button>
       <button class="good" onclick="closeHelp()">ENTENDI</button>
@@ -647,434 +365,389 @@ textarea{resize:vertical;min-height:145px;line-height:1.65}
 <section id="final">
   <div class="finalCard">
     <div id="score" class="score">0%</div>
-    <h1>INVESTIGAÇÃO ENCERRADA</h1>
+    <h1>Investigacao Encerrada</h1>
     <p id="resultText"></p>
-    <div class="actions" style="max-width:420px;margin:0 auto">
+    <div class="actions">
       <button id="certBtn" class="good hidden" onclick="downloadCertificate()">BAIXAR CERTIFICADO PNG</button>
       <button class="secondary" onclick="location.reload()">REABRIR CASO</button>
     </div>
-
     <div class="certWrap" id="certWrap">
-      <div id="certificate">
-        <div class="certTop">THE CAT ARCHIVE // BE SAFE</div>
-        <div class="certTitle">Certificado de Conclusão</div>
-        <div class="certText">Certificamos que</div>
-        <div class="certName" id="certName">Nome</div>
-        <div class="certText">
-          concluiu o desafio investigativo <b>THE CAT ARCHIVE</b>, demonstrando capacidade de análise de evidências,
-          distinção entre ruído operacional e comprometimento real, construção de hipótese forense e correlação de eventos.
-          Carga horária: <b>4h</b>.
-        </div>
-        <div class="certFoot">
-          <div>
-            <div id="certDate">Data</div>
-            <div id="certHash">Hash</div>
-          </div>
-          <div>
-            <div class="sign">Mariana BS</div>
-            <div>Mariana BS (Instrutora)</div>
-          </div>
-        </div>
-      </div>
+      <canvas id="certificate" width="960" height="600"></canvas>
     </div>
   </div>
 </section>
 
 <script>
 "use strict";
+const SALT="cat_archive::be_safe::miau_2026::MarianaBS";
+function xorDecode(enc,key){const raw=decodeURIComponent(escape(atob(enc)));let o="";for(let i=0;i<raw.length;i++)o+=String.fromCharCode(raw.charCodeAt(i)^key.charCodeAt(i%key.length));return o}
+const OBF="CEcEUkAGHBEKQlRTRldRBEZbXUUWR0FJVlQER1dFRx5TRlldRQ5BR0JbRRhHQVNYVUVWR0FPVgMIR01eXFhRDR4KDUEWSFZQXQdZX0FJVlQXDkdZW10eRQ1KRkNXQwZYW0FJVlQXDkZZQUBRF0JbVE0YR0FJVlQMHksXSFZQXQdZX0FJVlQMSFdJWlZEDh4KDUJEVkQHWFtBSVZUD0lNUgIEUFRCQhdHVkNJC0FZVRBTR04XSFZQXQdZX0FJVlQMSVdaVkQOHgoNQhZIVlBdB1lfQUlWVBdIRl5QXlEeR0FJVlQPQlNcXEQXQUtNRRg=";
+let playerName="",lastScore=0,audioCtx=null,muted=false,audioReady=false;
 
-const SALT = "cat_archive::be_safe::miau_2026::MarianaBS";
-
-function xorEncode(str,key){
-  let out = "";
-  for(let i=0;i<str.length;i++){
-    out += String.fromCharCode(str.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-  }
-  return btoa(unescape(encodeURIComponent(out)));
-}
-function xorDecode(encoded,key){
-  const raw = decodeURIComponent(escape(atob(encoded)));
-  let out = "";
-  for(let i=0;i<raw.length;i++){
-    out += String.fromCharCode(raw.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-  }
-  return out;
-}
-
-const OBF = "CEcEUkAGHBEKQlRTRldRBEZbXUUWR0FJVlQER1dFRx5TRlldRQ5BR0JbRRhHQVNYVUVWR0FPVgMIR01eXFhRDR4KDUEWSFZQXQdZX0FJVlQXDkdZW10eRQ1KRkNXQwZYW0FJVlQXDkZZQUBRF0JbVE0YR0FJVlQMHksXSFZQXQdZX0FJVlQMSFdJWlZEDh4KDUJEVkQHWFtBSVZUD0lNUgIEUFRCQhdHVkNJC0FZVRBTR04XSFZQXQdZX0FJVlQMSVdaVkQOHgoNQhZIVlBdB1lfQUlWVBdIRl5QXlEeR0FJVlQPQlNcXEQXQUtNRRg=";
-
-let playerName = "";
-let cardZones = {};
-let lastScore = 0;
-let audioCtx = null;
-let muted = false;
-let audioReady = false;
-
-const evidenceData = [
-  {id:"E01", type:"FITA VHS", title:"CAM-03 // 02:14", text:"Silhueta felina atravessa o rack financeiro. Cinco segundos depois o switch principal reinicia."},
-  {id:"E02", type:"LOG AD", title:"whiskers-admin", text:"Conta criada às 03:11 e adicionada ao grupo Domain Admins. Origem: estação FIN-07."},
-  {id:"E03", type:"EMAIL", title:"PremiumCatFood.docm", text:"Macro habilitada por usuário do financeiro minutos antes do primeiro beacon DNS."},
-  {id:"E04", type:"BILHETE", title:"Post-it amarelo", text:"'senha do backup: m1au2026' encontrado colado embaixo do teclado da sala de operações."},
-  {id:"E05", type:"FOTO", title:"Gato dormindo no teclado", text:"CPU em 100%, porém sem processo suspeito, sem conexão externa e sem persistência."},
-  {id:"E06", type:"TRANSCRIÇÃO", title:"Áudio corrompido", text:"'ninguém vai perceber o upload...' seguido de miado e porta fechando."},
-  {id:"E07", type:"TICKET", title:"INC-2041", text:"Analista classificou beacon DNS recorrente como atualização do antivírus. O domínio não pertence ao fabricante."},
-  {id:"E08", type:"USB", title:"Pendrive peixe azul", text:"Dispositivo conectado ao FILE-02 às 01:03. Logo depois houve cópia anormal de diretórios financeiros."},
-  {id:"E09", type:"FITA VHS", title:"CAM-07 // 01:58", text:"Nada além de um gato derrubando um cabo de rede. Impacto físico, sem cadeia lógica de ataque."},
-  {id:"E10", type:"PRINT", title:"Task Scheduler", text:"Tarefa 'Cat Sync Service' executando PowerShell encoded a cada 15 minutos."},
-  {id:"E11", type:"ANOTAÇÃO", title:"Hash parcial", text:"5f4dcc3b5aa765d61d8327deb882cf99 anotado em papel. Não aparece em nenhum artefato do host."},
-  {id:"E12", type:"CHAT", title:"Mensagem interna", text:"'o gato não sabe usar mimikatz... eu acho'. Piada antiga do canal interno, sem relação temporal."}
+const evidenceData=[
+  {id:"E01",type:"FITA VHS",title:"CAM-03 // 02:14",text:"Silhueta felina atravessa o rack financeiro. Cinco segundos depois o switch principal reinicia."},
+  {id:"E02",type:"LOG AD",title:"whiskers-admin",text:"Conta criada as 03:11 e adicionada ao grupo Domain Admins. Origem: estacao FIN-07."},
+  {id:"E03",type:"EMAIL",title:"PremiumCatFood.docm",text:"Macro habilitada por usuario do financeiro minutos antes do primeiro beacon DNS."},
+  {id:"E04",type:"BILHETE",title:"Post-it amarelo",text:"'senha do backup: m1au2026' encontrado colado embaixo do teclado da sala de operacoes."},
+  {id:"E05",type:"FOTO",title:"Gato dormindo no teclado",text:"CPU em 100%, porem sem processo suspeito, sem conexao externa e sem persistencia."},
+  {id:"E06",type:"TRANSCRICAO",title:"Audio corrompido",text:"'ninguem vai perceber o upload...' seguido de miado e porta fechando."},
+  {id:"E07",type:"TICKET",title:"INC-2041",text:"Analista classificou beacon DNS recorrente como atualizacao do antivirus. O dominio nao pertence ao fabricante."},
+  {id:"E08",type:"USB",title:"Pendrive peixe azul",text:"Dispositivo conectado ao FILE-02 as 01:03. Logo depois houve copia anormal de diretorios financeiros."},
+  {id:"E09",type:"FITA VHS",title:"CAM-07 // 01:58",text:"Nada alem de um gato derrubando um cabo de rede. Impacto fisico, sem cadeia logica de ataque."},
+  {id:"E10",type:"PRINT",title:"Task Scheduler",text:"Tarefa 'Cat Sync Service' executando PowerShell encoded a cada 15 minutos."},
+  {id:"E11",type:"ANOTACAO",title:"Hash parcial",text:"5f4dcc3b5aa765d61d8327deb882cf99 anotado em papel. Nao aparece em nenhum artefato do host."},
+  {id:"E12",type:"CHAT",title:"Mensagem interna",text:"'o gato nao sabe usar mimikatz... eu acho'. Piada antiga do canal interno, sem relacao temporal."}
 ];
 
-function getAnswerMap(){
-  try{
-    return JSON.parse(xorDecode(OBF,SALT));
-  }catch(e){
-    alert("Falha ao carregar a matriz do desafio. Recarregue a página.");
-    return {};
-  }
-}
+function getAnswerMap(){try{return JSON.parse(xorDecode(OBF,SALT))}catch(e){alert("Falha ao carregar a matriz.");return{}}}
 
 function startGame(){
-  playerName = document.getElementById("playerName").value.trim();
-  if(!playerName){
-    toast("Nome obrigatório... até o gato tem identificação no inventário.");
-    return;
-  }
-  initAudio();
-  playMeow();
+  playerName=document.getElementById("playerName").value.trim();
+  if(!playerName){toast("Nome obrigatorio... ate o gato tem identificacao no inventario.");return}
+  initAudio();playMeow();
   document.getElementById("boot").classList.add("hidden");
   document.getElementById("app").classList.remove("hidden");
   loadCards();
 }
-
-function shuffle(arr){
-  return arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
-}
-
+function shuffle(arr){return arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1])}
 function loadCards(){
-  const pool = document.getElementById("evidencePool");
-  pool.innerHTML = "";
+  const pool=document.getElementById("evidencePool");pool.innerHTML="";
   shuffle(evidenceData).forEach(ev=>{
-    const div = document.createElement("div");
-    div.className = "evidence";
-    div.id = ev.id;
-    div.draggable = true;
-    div.dataset.id = ev.id;
-    div.addEventListener("dragstart", dragStart);
-    div.addEventListener("click", mobileCycle);
-    div.innerHTML = `
-      <div class="evtype"><span>${ev.type}</span><span>${ev.id}</span></div>
-      <div class="evtitle">${ev.title}</div>
-      <div class="evtext">${ev.text}</div>
-    `;
-    pool.appendChild(div);
-  });
-  updateLeftCount();
+    const d=document.createElement("div");d.className="evidence";d.id=ev.id;d.draggable=true;d.dataset.id=ev.id;
+    d.addEventListener("dragstart",dragStart);d.addEventListener("click",mobileCycle);
+    d.innerHTML='<div class="evtype"><span>'+ev.type+'</span><span>'+ev.id+'</span></div><div class="evtitle">'+ev.title+'</div><div class="evtext">'+ev.text+'</div>';
+    pool.appendChild(d);
+  });updateLeftCount();
 }
-
-function dragStart(ev){
-  playKey();
-  ev.dataTransfer.setData("text/plain", ev.currentTarget.id);
-}
-
-function allowDrop(ev){
-  ev.preventDefault();
-  ev.currentTarget.classList.add("over");
-}
-function leaveDrop(ev){
-  ev.currentTarget.classList.remove("over");
-}
+function dragStart(ev){playKey();ev.dataTransfer.setData("text/plain",ev.currentTarget.id)}
+function allowDrop(ev){ev.preventDefault();ev.currentTarget.classList.add("over")}
+function leaveDrop(ev){ev.currentTarget.classList.remove("over")}
 function dropCard(ev){
-  ev.preventDefault();
-  ev.currentTarget.classList.remove("over");
-  const id = ev.dataTransfer.getData("text/plain");
-  const el = document.getElementById(id);
-  if(el){ ev.currentTarget.appendChild(el); playKey(); }
-  updateLeftCount();
+  ev.preventDefault();ev.currentTarget.classList.remove("over");
+  var id=ev.dataTransfer.getData("text/plain"),el=document.getElementById(id);
+  if(el){ev.currentTarget.appendChild(el);playKey()}updateLeftCount();
 }
-
 function mobileCycle(ev){
-  if(window.innerWidth > 760) return;
-  const el = ev.currentTarget;
-  const zones = Array.from(document.querySelectorAll(".drop"));
-  const current = el.parentElement && el.parentElement.classList.contains("drop") ? zones.indexOf(el.parentElement) : -1;
-  const next = zones[(current + 1) % zones.length];
-  next.appendChild(el);
-  playKey();
-  updateLeftCount();
+  if(window.innerWidth>760)return;
+  var el=ev.currentTarget,zones=Array.from(document.querySelectorAll(".drop"));
+  var cur=el.parentElement&&el.parentElement.classList.contains("drop")?zones.indexOf(el.parentElement):-1;
+  zones[(cur+1)%zones.length].appendChild(el);playKey();updateLeftCount();
 }
-
-function updateLeftCount(){
-  const pool = document.getElementById("evidencePool");
-  document.getElementById("leftCount").textContent = pool.querySelectorAll(".evidence").length;
-}
-
+function updateLeftCount(){document.getElementById("leftCount").textContent=document.getElementById("evidencePool").querySelectorAll(".evidence").length}
 function resetBoard(){
-  const pool = document.getElementById("evidencePool");
-  document.querySelectorAll(".drop .evidence").forEach(el=>pool.appendChild(el));
-  updateLeftCount();
-  playMeow();
-  toast("Mural limpo. O gato nega qualquer envolvimento.");
+  var pool=document.getElementById("evidencePool");
+  document.querySelectorAll(".drop .evidence").forEach(function(el){pool.appendChild(el)});
+  updateLeftCount();playMeow();toast("Mural limpo. O gato nega qualquer envolvimento.");
 }
-
 function finish(){
-  const remaining = document.getElementById("evidencePool").querySelectorAll(".evidence").length;
-  const reportValue = document.getElementById("reportText").value.trim();
-  if(remaining > 0){
-    playMeow();
-    toast("Ainda existem " + remaining + " arquivo(s) fora do mural. Termine a classificação antes de encerrar, Sherlock de sachê.");
-    return;
-  }
-  if(reportValue.length < 80){
-    playMeow();
-    toast("Relatório curto demais. Escreva a hipótese com vetor, persistência, conta e comunicação externa.");
-    return;
-  }
-  const answers = getAnswerMap();
-  let raw = 0;
-  let max = 0;
-
-  document.querySelectorAll(".drop").forEach(zone=>{
-    const z = zone.dataset.zone;
-    zone.querySelectorAll(".evidence").forEach(card=>{
-      const id = card.dataset.id;
-      const accepted = answers[id] || [];
-      max += 7;
-      if(accepted.includes(z)) raw += 7;
+  var rem=document.getElementById("evidencePool").querySelectorAll(".evidence").length;
+  var rep=document.getElementById("reportText").value.trim();
+  if(rem>0){playMeow();toast("Ainda existem "+rem+" arquivo(s) fora do mural.");return}
+  if(rep.length<80){playMeow();toast("Relatorio curto demais. Escreva a hipotese com vetor, persistencia, conta e comunicacao externa.");return}
+  var answers=getAnswerMap();var raw=0,max=0;
+  document.querySelectorAll(".drop").forEach(function(zone){
+    var z=zone.dataset.zone;
+    zone.querySelectorAll(".evidence").forEach(function(card){
+      var accepted=answers[card.dataset.id]||[];max+=7;if(accepted.includes(z))raw+=7;
     });
   });
-
-  const report = normalize(document.getElementById("reportText").value);
-  const required = ["macro","powershell","whiskers","dns"];
-  let reportPoints = 0;
-  required.forEach(term=>{
-    if(report.includes(term)) reportPoints += 4;
-  });
-  raw += reportPoints;
-  max += 16;
-
-  const order = ["E03","E10","E02","E08"];
-  const given = ["o1","o2","o3","o4"].map(id=>document.getElementById(id).value.trim().toUpperCase());
-  let orderPoints = 0;
-  given.forEach((v,i)=>{ if(v === order[i]) orderPoints += 3; });
-  raw += orderPoints;
-  max += 12;
-
-  const percent = Math.round((raw / max) * 100);
-  lastScore = Math.min(100, percent);
-
-  showFinal(lastScore);
+  var report=normalize(document.getElementById("reportText").value);
+  ["macro","powershell","whiskers","dns"].forEach(function(t){if(report.includes(t))raw+=4});max+=16;
+  var order=["E03","E10","E02","E08"];
+  ["o1","o2","o3","o4"].forEach(function(id,i){if(document.getElementById(id).value.trim().toUpperCase()===order[i])raw+=3});
+  max+=12;
+  lastScore=Math.min(100,Math.round((raw/max)*100));showFinal(lastScore);
 }
-
-function normalize(s){
-  return (s || "")
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"");
-}
-
+function normalize(s){return(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
 function showFinal(score){
   document.getElementById("app").classList.add("hidden");
-  const final = document.getElementById("final");
-  final.style.display = "flex";
-  const scoreEl = document.getElementById("score");
-  scoreEl.textContent = score + "%";
-  scoreEl.className = "score " + (score >= 70 ? "ok" : "no");
-
-  if(score >= 70){
+  var fin=document.getElementById("final");fin.style.display="flex";
+  var sc=document.getElementById("score");sc.textContent=score+"%";sc.className="score "+(score>=70?"ok":"no");
+  if(score>=70){
     playMeow();
-    document.getElementById("resultText").textContent =
-      "Você reconstruiu o caso com consistência. A cadeia provável envolve macro maliciosa, persistência via PowerShell, criação da conta whiskers-admin, beacon DNS e uso de mídia removível para exfiltração. O gato continua suspeito, mas juridicamente escorregadio.";
+    document.getElementById("resultText").textContent="Voce reconstruiu o caso com consistencia. A cadeia provavel envolve macro maliciosa, persistencia via PowerShell, criacao da conta whiskers-admin, beacon DNS e uso de midia removivel para exfiltracao.";
     document.getElementById("certBtn").classList.remove("hidden");
-    document.getElementById("certWrap").style.display = "block";
-    prepareCertificate();
+    document.getElementById("certWrap").style.display="block";
+    setTimeout(drawCertificate,120);
   }else{
     playMeow();
-    document.getElementById("resultText").textContent =
-      "A investigação não fechou. Você misturou ruído felino com evidência crítica, e agora o atacante está livre enquanto o SOC discute se miado pode ser IOC. Spoiler: sozinho, não.";
+    document.getElementById("resultText").textContent="A investigacao nao fechou. Voce misturou ruido felino com evidencia critica, e agora o atacante esta livre enquanto o SOC discute se miado pode ser IOC.";
     document.getElementById("certBtn").classList.add("hidden");
-    document.getElementById("certWrap").style.display = "none";
+    document.getElementById("certWrap").style.display="none";
   }
 }
 
-function prepareCertificate(){
-  const date = new Date().toLocaleDateString("pt-BR");
-  const hash = "CAT-" + btoa(playerName + "|" + date + "|" + lastScore).replace(/[^A-Z0-9]/gi,"").slice(0,16).toUpperCase();
-  document.getElementById("certName").textContent = playerName;
-  document.getElementById("certDate").textContent = "Data de conclusão: " + date + " | Aproveitamento: " + lastScore + "%";
-  document.getElementById("certHash").textContent = "Código de verificação: " + hash;
+/* ==================== CERTIFICATE ==================== */
+function getCertHash(){
+  var d=new Date().toLocaleDateString("pt-BR");
+  return{date:d,hash:"CAT-"+btoa(playerName+"|"+d+"|"+lastScore).replace(/[^A-Z0-9]/gi,"").slice(0,16).toUpperCase()};
+}
+
+function rrect(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+}
+function goldRule(ctx,x,y,w){
+  var g=ctx.createLinearGradient(x,0,x+w,0);
+  g.addColorStop(0,"rgba(232,168,40,.45)");g.addColorStop(.6,"rgba(232,168,40,.2)");g.addColorStop(1,"transparent");
+  ctx.save();ctx.strokeStyle=g;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.stroke();ctx.restore();
+}
+function corner(ctx,x,y,sx,sy){
+  ctx.save();ctx.strokeStyle="rgba(232,168,40,.38)";ctx.lineWidth=1.5;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(x+sx*28,y);ctx.lineTo(x,y);ctx.lineTo(x,y+sy*28);ctx.stroke();
+  ctx.strokeStyle="rgba(232,168,40,.2)";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(x+sx*16,y+sy*5);ctx.lineTo(x+sx*5,y+sy*16);ctx.stroke();
+  ctx.fillStyle="rgba(232,168,40,.45)";ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+}
+function wrapTxt(ctx,text,x,y,maxW,lh){
+  var words=text.split(" ");var line="";
+  words.forEach(function(w,i){
+    var t=line+w+" ";
+    if(ctx.measureText(t).width>maxW&&i>0){ctx.fillText(line,x,y);line=w+" ";y+=lh}else{line=t;}
+  });ctx.fillText(line,x,y);
+}
+function paw(ctx,cx,cy,size){
+  ctx.beginPath();ctx.ellipse(cx,cy,size,size*0.75,0,0,Math.PI*2);ctx.fill();
+  var toes=[[-size*0.65,-size*0.85],[0,-size*1.05],[size*0.65,-size*0.85],[-size*1.05,-size*0.3]];
+  toes.forEach(function(t){ctx.beginPath();ctx.ellipse(cx+t[0],cy+t[1],size*0.38,size*0.34,0,0,Math.PI*2);ctx.fill()});
+}
+function catPortrait(ctx,cx,cy,size){
+  var s=size/90;
+  ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);
+  /* glow halo */
+  var gl=ctx.createRadialGradient(0,0,5,0,0,95);gl.addColorStop(0,"rgba(232,168,40,.08)");gl.addColorStop(1,"transparent");
+  ctx.fillStyle=gl;ctx.beginPath();ctx.arc(0,0,95,0,Math.PI*2);ctx.fill();
+  /* body */
+  var bG=ctx.createRadialGradient(-8,5,5,-8,5,72);bG.addColorStop(0,"#4a3824");bG.addColorStop(1,"#1e1610");
+  ctx.fillStyle=bG;ctx.beginPath();ctx.ellipse(0,62,46,42,0,0,Math.PI*2);ctx.fill();
+  /* head */
+  var hG=ctx.createRadialGradient(-10,-16,4,0,0,62);hG.addColorStop(0,"#5c4830");hG.addColorStop(1,"#281e12");
+  ctx.fillStyle=hG;ctx.beginPath();ctx.ellipse(0,0,56,52,0,0,Math.PI*2);ctx.fill();
+  /* ears */
+  ctx.fillStyle="#1c1410";
+  ctx.beginPath();ctx.moveTo(-36,-44);ctx.lineTo(-58,-82);ctx.lineTo(-14,-52);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(36,-44);ctx.lineTo(58,-82);ctx.lineTo(14,-52);ctx.closePath();ctx.fill();
+  ctx.fillStyle="rgba(160,65,55,.55)";
+  ctx.beginPath();ctx.moveTo(-33,-46);ctx.lineTo(-50,-74);ctx.lineTo(-18,-52);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(33,-46);ctx.lineTo(50,-74);ctx.lineTo(18,-52);ctx.closePath();ctx.fill();
+  /* eye glow */
+  [-20,20].forEach(function(ex){
+    var eg=ctx.createRadialGradient(ex,4,0,ex,4,18);eg.addColorStop(0,"rgba(248,200,40,.35)");eg.addColorStop(1,"transparent");
+    ctx.fillStyle=eg;ctx.beginPath();ctx.arc(ex,4,18,0,Math.PI*2);ctx.fill();
+  });
+  /* irises */
+  var eG=ctx.createRadialGradient(-5,-5,1,-5,-5,14);eG.addColorStop(0,"#f8e068");eG.addColorStop(.5,"#e8a828");eG.addColorStop(1,"#7a4810");
+  ctx.fillStyle=eG;
+  ctx.beginPath();ctx.ellipse(-20,4,14,14,0,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.ellipse(20,4,14,14,0,0,Math.PI*2);ctx.fill();
+  /* pupils */
+  ctx.fillStyle="#080604";
+  ctx.beginPath();ctx.ellipse(-20,4,5.5,11,0,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.ellipse(20,4,5.5,11,0,0,Math.PI*2);ctx.fill();
+  /* glints */
+  ctx.fillStyle="rgba(255,255,255,.78)";
+  ctx.beginPath();ctx.arc(-23,0,3.5,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(17,0,3.5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle="rgba(255,255,255,.3)";
+  ctx.beginPath();ctx.arc(-18,7,1.8,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(22,7,1.8,0,Math.PI*2);ctx.fill();
+  /* nose */
+  var nG=ctx.createRadialGradient(0,-2,1,0,-2,9);nG.addColorStop(0,"#e8808a");nG.addColorStop(1,"#b04858");
+  ctx.fillStyle=nG;ctx.beginPath();ctx.moveTo(0,20);ctx.lineTo(-7,28);ctx.lineTo(7,28);ctx.closePath();ctx.fill();
+  /* mouth */
+  ctx.strokeStyle="#a04050";ctx.lineWidth=2;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(-7,28);ctx.quadraticCurveTo(0,36,7,28);ctx.stroke();
+  /* whiskers — using plain ASCII minus only */
+  ctx.strokeStyle="rgba(220,185,110,.32)";ctx.lineWidth=1.2;
+  var wh=[[-70,6,-16,20],[-72,16,-16,22],[-68,26,-16,24]];
+  wh.forEach(function(w){
+    ctx.beginPath();ctx.moveTo(w[0],w[1]);ctx.lineTo(w[2],w[3]);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(-w[0],w[1]);ctx.lineTo(-w[2],w[3]);ctx.stroke();
+  });
+  /* collar */
+  ctx.strokeStyle="#e8a828";ctx.lineWidth=6.5;ctx.lineCap="round";
+  ctx.beginPath();ctx.arc(0,36,50,Math.PI*0.65,Math.PI*0.35);ctx.stroke();
+  ctx.strokeStyle="rgba(248,220,80,.4)";ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.arc(0,36,50,Math.PI*0.65,Math.PI*0.35);ctx.stroke();
+  /* bell */
+  var bellG=ctx.createRadialGradient(-2,-2,1,-2,-2,8);bellG.addColorStop(0,"#e8c050");bellG.addColorStop(1,"#a07018");
+  ctx.fillStyle=bellG;ctx.beginPath();ctx.arc(0,82,8,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle="rgba(248,230,80,.5)";ctx.lineWidth=1.2;ctx.stroke();
+  ctx.fillStyle="rgba(255,248,180,.65)";ctx.beginPath();ctx.arc(-2,79,3,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+}
+
+function drawCertificate(){
+  var canvas=document.getElementById("certificate");
+  var ctx=canvas.getContext("2d");
+  var W=960,H=600;
+  ctx.clearRect(0,0,W,H);
+
+  /* background */
+  var bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,"#0e0a06");bg.addColorStop(.45,"#080604");bg.addColorStop(1,"#120e09");
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  /* fur stripes */
+  ctx.save();
+  for(var i=-H;i<W+H;i+=76){
+    ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i+H*Math.tan(52*Math.PI/180),H);
+    ctx.strokeStyle="rgba(200,140,30,.028)";ctx.lineWidth=34;ctx.stroke();
+  }
+  ctx.restore();
+
+  /* warm amber glow top-left */
+  var g1=ctx.createRadialGradient(180,120,0,180,120,400);g1.addColorStop(0,"rgba(220,148,28,.16)");g1.addColorStop(1,"transparent");
+  ctx.fillStyle=g1;ctx.fillRect(0,0,W,H);
+  /* teal glow bottom-right */
+  var g2=ctx.createRadialGradient(W-80,H+30,0,W-80,H+30,360);g2.addColorStop(0,"rgba(66,200,176,.11)");g2.addColorStop(1,"transparent");
+  ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
+
+  /* outer border */
+  ctx.strokeStyle="rgba(80,60,35,.9)";ctx.lineWidth=1.5;rrect(ctx,8,8,W-16,H-16,22);ctx.stroke();
+  /* shimmer border */
+  var fs=ctx.createLinearGradient(8,8,W-8,H-8);fs.addColorStop(0,"rgba(232,168,40,.0)");fs.addColorStop(.25,"rgba(232,168,40,.22)");fs.addColorStop(.5,"rgba(248,200,80,.35)");fs.addColorStop(.75,"rgba(232,168,40,.22)");fs.addColorStop(1,"rgba(232,168,40,.0)");
+  ctx.strokeStyle=fs;ctx.lineWidth=1;rrect(ctx,8,8,W-16,H-16,22);ctx.stroke();
+  /* inner border */
+  ctx.strokeStyle="rgba(232,168,40,.1)";ctx.lineWidth=0.8;rrect(ctx,20,20,W-40,H-40,15);ctx.stroke();
+
+  /* top/bottom gold lines */
+  var topL=ctx.createLinearGradient(W*0.1,0,W*0.9,0);topL.addColorStop(0,"transparent");topL.addColorStop(.5,"rgba(248,210,80,.5)");topL.addColorStop(1,"transparent");
+  ctx.strokeStyle=topL;ctx.lineWidth=1.2;
+  ctx.beginPath();ctx.moveTo(W*0.1,20);ctx.lineTo(W*0.9,20);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(W*0.1,H-20);ctx.lineTo(W*0.9,H-20);ctx.stroke();
+
+  /* corners */
+  corner(ctx,36,36,1,1);corner(ctx,W-36,36,-1,1);corner(ctx,36,H-36,1,-1);corner(ctx,W-36,H-36,-1,-1);
+
+  /* left panel */
+  var leftW=230;
+  var lpBg=ctx.createLinearGradient(0,0,leftW,0);lpBg.addColorStop(0,"rgba(232,168,40,.05)");lpBg.addColorStop(1,"transparent");
+  ctx.fillStyle=lpBg;ctx.fillRect(8,8,leftW,H-16);
+  /* vertical divider */
+  var vD=ctx.createLinearGradient(0,40,0,H-40);vD.addColorStop(0,"transparent");vD.addColorStop(.2,"rgba(232,168,40,.25)");vD.addColorStop(.8,"rgba(232,168,40,.25)");vD.addColorStop(1,"transparent");
+  ctx.strokeStyle=vD;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(leftW,40);ctx.lineTo(leftW,H-40);ctx.stroke();
+
+  /* cat portrait */
+  catPortrait(ctx,leftW/2,H/2-10,88);
+
+  /* archive label top-left */
+  ctx.save();ctx.font="500 8px 'DM Mono', monospace";ctx.fillStyle="rgba(200,160,70,.55)";ctx.textAlign="center";
+  ctx.fillText("THE CAT ARCHIVE",leftW/2,55);ctx.fillText("BE SAFE // FORENSIC",leftW/2,69);ctx.restore();
+
+  /* paw prints bottom left */
+  ctx.save();ctx.globalAlpha=0.07;ctx.fillStyle="#e8a828";
+  paw(ctx,42,H-70,12);paw(ctx,70,H-88,10);paw(ctx,96,H-72,11);ctx.restore();
+
+  /* ---- right content ---- */
+  var CX=leftW+28;
+
+  /* kicker */
+  ctx.save();ctx.font="500 9.5px 'DM Mono', monospace";ctx.fillStyle="rgba(232,168,40,.65)";ctx.letterSpacing="3.5px";
+  ctx.fillText("CERTIFICADO DE CONCLUSAO",CX,62);ctx.restore();
+
+  /* main title */
+  ctx.save();
+  var tG=ctx.createLinearGradient(CX,80,CX+560,160);tG.addColorStop(0,"#fdf6e8");tG.addColorStop(.3,"#f8d870");tG.addColorStop(.65,"#e8a828");tG.addColorStop(1,"#c08020");
+  ctx.fillStyle=tG;ctx.font="900 52px 'Playfair Display', serif";
+  ctx.fillText("The Cat Archive",CX,138);ctx.restore();
+
+  goldRule(ctx,CX,155,500);
+
+  /* certifies that */
+  ctx.save();ctx.font="300 13.5px 'DM Sans', sans-serif";ctx.fillStyle="rgba(188,158,108,.75)";
+  ctx.fillText("Certificamos que",CX,192);ctx.restore();
+
+  /* name */
+  ctx.save();
+  var nG2=ctx.createLinearGradient(CX,202,CX+600,250);nG2.addColorStop(0,"#ffffff");nG2.addColorStop(.7,"#f0e0c0");nG2.addColorStop(1,"#d8c090");
+  ctx.fillStyle=nG2;ctx.font="700 40px 'Playfair Display', serif";
+  ctx.fillText(playerName,CX,248);ctx.restore();
+
+  /* name underline */
+  var nW=Math.min(ctx.measureText(playerName).width+20,600);
+  var nU=ctx.createLinearGradient(CX,0,CX+nW,0);nU.addColorStop(0,"rgba(232,168,40,.55)");nU.addColorStop(.7,"rgba(232,168,40,.25)");nU.addColorStop(1,"transparent");
+  ctx.strokeStyle=nU;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(CX,255);ctx.lineTo(CX+nW,255);ctx.stroke();
+
+  /* body text */
+  ctx.save();ctx.font="300 13px 'DM Sans', sans-serif";ctx.fillStyle="rgba(190,165,120,.82)";
+  wrapTxt(ctx,"concluiu o desafio investigativo The Cat Archive, demonstrando capacidade de analise forense, distincao entre ruido operacional e comprometimento real, construcao de hipotese e correlacao de eventos em ambiente de seguranca. Carga horaria: 4h.",CX,285,640,20.5);
+  ctx.restore();
+
+  /* score badge */
+  var bX=CX,bY=337,bW=165,bH=30;
+  var bBg=ctx.createLinearGradient(bX,bY,bX,bY+bH);bBg.addColorStop(0,"rgba(66,200,176,.15)");bBg.addColorStop(1,"rgba(66,200,176,.06)");
+  ctx.fillStyle=bBg;rrect(ctx,bX,bY,bW,bH,8);ctx.fill();
+  ctx.strokeStyle="rgba(66,200,176,.3)";ctx.lineWidth=1;rrect(ctx,bX,bY,bW,bH,8);ctx.stroke();
+  ctx.save();ctx.font="600 11px 'DM Mono', monospace";ctx.fillStyle="#42c8b0";
+  ctx.fillText("APROVEITAMENTO  "+lastScore+"%",bX+12,bY+19.5);ctx.restore();
+
+  goldRule(ctx,CX,390,580);
+
+  /* date + hash */
+  var ch=getCertHash();
+  ctx.save();ctx.font="400 11px 'DM Mono', monospace";ctx.fillStyle="rgba(155,125,80,.65)";
+  ctx.fillText("Data de conclusao: "+ch.date,CX,415);
+  ctx.fillText("Codigo de verificacao: "+ch.hash,CX,432);ctx.restore();
+
+  /* signature */
+  var sigX=W-230;
+  var sigLG=ctx.createLinearGradient(sigX,0,W-30,0);sigLG.addColorStop(0,"rgba(232,168,40,.4)");sigLG.addColorStop(1,"rgba(232,168,40,.05)");
+  ctx.strokeStyle=sigLG;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(sigX,422);ctx.lineTo(W-30,422);ctx.stroke();
+  ctx.save();
+  var sG=ctx.createLinearGradient(sigX,428,W-30,470);sG.addColorStop(0,"#f0e0c0");sG.addColorStop(1,"#c89030");
+  ctx.fillStyle=sG;ctx.font="italic 700 30px 'Playfair Display', serif";
+  ctx.fillText("Mariana BS",sigX,456);ctx.restore();
+  ctx.save();ctx.font="400 10.5px 'DM Sans', sans-serif";ctx.fillStyle="rgba(155,125,80,.6)";
+  ctx.fillText("Mariana BS - Instrutora",sigX,472);ctx.restore();
+
+  /* paw watermark near signature */
+  ctx.save();ctx.globalAlpha=0.06;ctx.fillStyle="#e8a828";paw(ctx,W-50,H-45,13);ctx.restore();
+  ctx.save();ctx.globalAlpha=0.04;ctx.fillStyle="#e8a828";paw(ctx,W-90,H-60,10);ctx.restore();
 }
 
 function downloadCertificate(){
-  const cert = document.getElementById("certificate");
-  const canvas = document.createElement("canvas");
-  canvas.width = 900;
-  canvas.height = 560;
-  const ctx = canvas.getContext("2d");
-
-  const grad = ctx.createLinearGradient(0,0,900,560);
-  grad.addColorStop(0,"#101010");
-  grad.addColorStop(1,"#050505");
-  ctx.fillStyle = grad;
-  ctx.fillRect(0,0,900,560);
-
-  ctx.strokeStyle = "#f1f1f1";
-  ctx.lineWidth = 3;
-  roundRect(ctx,8,8,884,544,28);
-  ctx.stroke();
-
-  ctx.strokeStyle = "rgba(255,255,255,.35)";
-  ctx.lineWidth = 1;
-  roundRect(ctx,28,28,844,504,18);
-  ctx.stroke();
-
-  ctx.fillStyle = "#8cffb7";
-  ctx.font = "700 13px JetBrains Mono, monospace";
-  ctx.fillText("THE CAT ARCHIVE // BE SAFE",42,70);
-
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "900 46px Inter, sans-serif";
-  ctx.fillText("Certificado de Conclusão",42,128);
-
-  ctx.fillStyle = "#d5d5d5";
-  ctx.font = "400 16px Inter, sans-serif";
-  ctx.fillText("Certificamos que",42,175);
-
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "900 34px Inter, sans-serif";
-  ctx.fillText(playerName,42,222);
-
-  ctx.fillStyle = "#d5d5d5";
-  ctx.font = "400 16px Inter, sans-serif";
-  wrapText(ctx,"concluiu o desafio investigativo THE CAT ARCHIVE, demonstrando capacidade de análise de evidências, distinção entre ruído operacional e comprometimento real, construção de hipótese forense e correlação de eventos. Carga horária: 2h.",42,270,720,28);
-
-  const date = new Date().toLocaleDateString("pt-BR");
-  const hash = "CAT-" + btoa(playerName + "|" + date + "|" + lastScore).replace(/[^A-Z0-9]/gi,"").slice(0,16).toUpperCase();
-
-  ctx.fillStyle = "#d8d8d8";
-  ctx.font = "400 13px Inter, sans-serif";
-  ctx.fillText("Data de conclusão: " + date + " | Aproveitamento: " + lastScore + "%",42,485);
-  ctx.fillText("Código de verificação: " + hash,42,508);
-
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "italic 30px cursive";
-  ctx.fillText("Mariana BS",660,480);
-  ctx.font = "400 13px Inter, sans-serif";
-  ctx.fillText("Mariana BS (Instrutora)",660,508);
-
-  const link = document.createElement("a");
-  link.download = "certificado-the-cat-archive.png";
-  link.href = canvas.toDataURL("image/png");
+  drawCertificate();
+  var link=document.createElement("a");
+  link.download="certificado-the-cat-archive.png";
+  link.href=document.getElementById("certificate").toDataURL("image/png");
   link.click();
 }
 
-function roundRect(ctx,x,y,w,h,r){
-  ctx.beginPath();
-  ctx.moveTo(x+r,y);
-  ctx.lineTo(x+w-r,y);
-  ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-  ctx.lineTo(x+w,y+h-r);
-  ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  ctx.lineTo(x+r,y+h);
-  ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-  ctx.lineTo(x,y+r);
-  ctx.quadraticCurveTo(x,y,x+r,y);
-  ctx.closePath();
+/* AUDIO */
+function initAudio(){if(audioReady)return;try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();audioReady=true}catch(e){audioReady=false}}
+function toggleMute(){muted=!muted;document.getElementById("muteBtn").textContent=muted?"AUDIO: OFF":"AUDIO: ON";if(!muted){initAudio();playKey()}}
+function tone(f,d,type,gain,delay){
+  type=type||"sine";gain=gain||0.035;delay=delay||0;
+  if(muted)return;initAudio();if(!audioCtx)return;
+  var o=audioCtx.createOscillator(),g=audioCtx.createGain();
+  o.type=type;o.frequency.setValueAtTime(f,audioCtx.currentTime+delay);
+  g.gain.setValueAtTime(0.0001,audioCtx.currentTime+delay);
+  g.gain.exponentialRampToValueAtTime(gain,audioCtx.currentTime+delay+0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+delay+d);
+  o.connect(g);g.connect(audioCtx.destination);o.start(audioCtx.currentTime+delay);o.stop(audioCtx.currentTime+delay+d+0.03);
 }
-function wrapText(ctx,text,x,y,maxWidth,lineHeight){
-  const words = text.split(" ");
-  let line = "";
-  for(let n=0;n<words.length;n++){
-    const testLine = line + words[n] + " ";
-    if(ctx.measureText(testLine).width > maxWidth && n > 0){
-      ctx.fillText(line,x,y);
-      line = words[n] + " ";
-      y += lineHeight;
-    }else{
-      line = testLine;
-    }
-  }
-  ctx.fillText(line,x,y);
-}
-
-
-function initAudio(){
-  if(audioReady) return;
-  try{
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    audioReady = true;
-  }catch(e){
-    audioReady = false;
-  }
-}
-function toggleMute(){
-  muted = !muted;
-  document.getElementById("muteBtn").textContent = muted ? "ÁUDIO: OFF" : "ÁUDIO: ON";
-  if(!muted){ initAudio(); playKey(); }
-}
-function tone(freq,duration,type="sine",gain=0.035,delay=0){
-  if(muted) return;
-  initAudio();
-  if(!audioCtx) return;
-  const osc = audioCtx.createOscillator();
-  const g = audioCtx.createGain();
-  osc.type = type;
-  osc.frequency.setValueAtTime(freq,audioCtx.currentTime + delay);
-  g.gain.setValueAtTime(0.0001,audioCtx.currentTime + delay);
-  g.gain.exponentialRampToValueAtTime(gain,audioCtx.currentTime + delay + 0.01);
-  g.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime + delay + duration);
-  osc.connect(g);
-  g.connect(audioCtx.destination);
-  osc.start(audioCtx.currentTime + delay);
-  osc.stop(audioCtx.currentTime + delay + duration + 0.03);
-}
-function playKey(){
-  tone(820,0.035,"square",0.018);
-  tone(410,0.025,"triangle",0.012,0.018);
-}
+function playKey(){tone(820,0.035,"square",0.018);tone(410,0.025,"triangle",0.012,0.018)}
 function playMeow(){
-  if(muted) return;
-  initAudio();
-  if(!audioCtx) return;
-  const now = audioCtx.currentTime;
-  const osc = audioCtx.createOscillator();
-  const g = audioCtx.createGain();
-  osc.type = "sawtooth";
-  osc.frequency.setValueAtTime(520,now);
-  osc.frequency.exponentialRampToValueAtTime(760,now+0.10);
-  osc.frequency.exponentialRampToValueAtTime(390,now+0.38);
-  g.gain.setValueAtTime(0.0001,now);
-  g.gain.exponentialRampToValueAtTime(0.055,now+0.04);
-  g.gain.exponentialRampToValueAtTime(0.0001,now+0.45);
-  osc.connect(g);
-  g.connect(audioCtx.destination);
-  osc.start(now);
-  osc.stop(now+0.5);
+  if(muted)return;initAudio();if(!audioCtx)return;
+  var now=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();
+  o.type="sawtooth";o.frequency.setValueAtTime(520,now);o.frequency.exponentialRampToValueAtTime(760,now+0.1);o.frequency.exponentialRampToValueAtTime(390,now+0.38);
+  g.gain.setValueAtTime(0.0001,now);g.gain.exponentialRampToValueAtTime(0.055,now+0.04);g.gain.exponentialRampToValueAtTime(0.0001,now+0.45);
+  o.connect(g);g.connect(audioCtx.destination);o.start(now);o.stop(now+0.5);
 }
-function openHelp(){
-  playKey();
-  document.getElementById("helpModal").classList.add("open");
-}
-function closeHelp(ev){
-  if(ev && ev.target && ev.target.id !== "helpModal") return;
-  playKey();
-  document.getElementById("helpModal").classList.remove("open");
-}
-document.addEventListener("keydown", ev=>{
-  const tag = (ev.target && ev.target.tagName || "").toLowerCase();
-  if(["input","textarea"].includes(tag)) playKey();
-  if(ev.key === "Escape") document.getElementById("helpModal").classList.remove("open");
+function openHelp(){playKey();document.getElementById("helpModal").classList.add("open")}
+function closeHelp(ev){if(ev&&ev.target&&ev.target.id!=="helpModal")return;playKey();document.getElementById("helpModal").classList.remove("open")}
+document.addEventListener("keydown",function(ev){
+  var tag=(ev.target&&ev.target.tagName||"").toLowerCase();
+  if(tag==="input"||tag==="textarea")playKey();
+  if(ev.key==="Escape")document.getElementById("helpModal").classList.remove("open");
 });
-document.addEventListener("click", ev=>{
-  if(ev.target && ev.target.closest && ev.target.closest("button")) playKey();
-});
-
+document.addEventListener("click",function(ev){if(ev.target&&ev.target.closest&&ev.target.closest("button"))playKey()});
 function toast(msg){
-  const t = document.createElement("div");
-  t.className = "toast";
-  t.textContent = msg;
-  document.body.appendChild(t);
-  setTimeout(()=>t.remove(),3200);
+  var t=document.createElement("div");t.className="toast";t.textContent=msg;
+  document.body.appendChild(t);setTimeout(function(){t.remove()},3400);
 }
 </script>
 </body>
